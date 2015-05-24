@@ -147,11 +147,24 @@ class basic_json
     ///////////////////////////
     // JSON value data types //
     ///////////////////////////
-
+#ifndef _MSC_VER
     /// a type for an object
     using object_t = ObjectType<StringType, basic_json>;
     /// a type for an array
     using array_t = ArrayType<basic_json>;
+#else
+    // MSVC2013 doesn't seem to be able to resolve the varargs template parameters
+    // json.hpp(152): error C2976: 'std::map' : too few template arguments
+    //   : see declaration of 'std::map'
+    // json.hpp(154) : error C2976 : 'std::vector' : too few template arguments
+    //   : see declaration of 'std::vector'
+    // The following fully qualified names work:
+
+    /// a type for an object
+    using object_t = ObjectType<StringType, basic_json, std::less<StringType>, AllocatorType<std::pair<const StringType,basic_json> > >;
+    /// a type for an array
+    using array_t = ArrayType<basic_json, AllocatorType<basic_json> >;
+#endif
     /// a type for a string
     using string_t = StringType;
     /// a type for a boolean
