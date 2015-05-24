@@ -420,6 +420,7 @@ class basic_json
         : basic_json(string_t(value))
     {}
 
+#ifndef _MSC_VER
     /// create a string (implicit)
     template <class V, typename
               std::enable_if<
@@ -428,6 +429,12 @@ class basic_json
     inline basic_json(const V& value)
         : basic_json(string_t(value))
     {}
+#else
+// MSVC2013 fails with:
+// json.hpp(434): error C2794 : 'basic_json' : is not a member of any direct or indirect base class of 'nlohmann::basic_json<std::map,std::vector,std::string,bool,int64_t,double,std::allocator>'
+//    json.hpp(4921) : see reference to class template instantiation 'nlohmann::basic_json<std::map,std::vector,std::string,bool,int64_t,double,std::allocator>' being compiled
+// Not sure how to fix this.
+#endif
 
     /// create a boolean (explicit)
     inline basic_json(boolean_t value)
