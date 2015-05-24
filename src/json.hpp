@@ -4917,10 +4917,15 @@ no parse error occurred.
 @param s  a string representation of a JSON object
 @return a JSON object
 */
+#ifndef _MSC_VER
 inline nlohmann::json operator "" _json(const char* s, std::size_t)
 {
     return nlohmann::json::parse(reinterpret_cast<nlohmann::json::string_t::value_type*>
                                  (const_cast<char*>(s)));
 }
+#else
+// User defined string literals not available in MSVC2013:
+// http://stackoverflow.com/questions/23207825/c-11-user-defined-literals-with-microsoft-visual-studio-2013
+#endif
 
 #endif
