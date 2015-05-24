@@ -2362,7 +2362,15 @@ class basic_json
     ///////////////
 
     /// an iterator value
-    union internal_iterator
+#ifndef _MSC_VER
+	union
+#else
+	// MSVC doesn't support unrestricted unions.
+	// http://stackoverflow.com/questions/30417121/is-it-legal-to-store-an-stl-iterator-inside-a-union/30417415#30417415
+	// This could be worked-around using placement new into buffer.
+	struct // HACK
+#endif
+    internal_iterator
     {
         /// iterator for JSON objects
         typename object_t::iterator object_iterator;
