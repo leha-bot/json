@@ -2364,15 +2364,15 @@ class basic_json
 
       public:
         /// the type of the values when the iterator is dereferenced
-        using value_type = basic_json::value_type;
+        using value_type = typename basic_json::value_type;
         /// a type to represent differences between iterators
-        using difference_type = basic_json::difference_type;
+        using difference_type = typename basic_json::difference_type;
         /// defines a pointer to the type iterated over (value_type)
-        using pointer = basic_json::pointer;
+        using pointer = typename basic_json::pointer;
         /// defines a reference to the type iterated over (value_type)
-        using reference = basic_json::reference;
+        using reference = typename basic_json::reference;
         /// the category of the iterator
-        using iterator_category = std::bidirectional_iterator_tag;
+        using iterator_category = typename std::bidirectional_iterator_tag;
 
         /// default constructor
         inline iterator() = default;
@@ -2880,15 +2880,15 @@ class basic_json
 
       public:
         /// the type of the values when the iterator is dereferenced
-        using value_type = basic_json::value_type;
+        using value_type = typename basic_json::value_type;
         /// a type to represent differences between iterators
-        using difference_type = basic_json::difference_type;
+        using difference_type = typename basic_json::difference_type;
         /// defines a pointer to the type iterated over (value_type)
-        using pointer = basic_json::const_pointer;
+        using pointer = typename basic_json::const_pointer;
         /// defines a reference to the type iterated over (value_type)
-        using reference = basic_json::const_reference;
+        using reference = typename basic_json::const_reference;
         /// the category of the iterator
-        using iterator_category = std::bidirectional_iterator_tag;
+        using iterator_category = typename std::bidirectional_iterator_tag;
 
         /// default constructor
         inline const_iterator() = default;
