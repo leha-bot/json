@@ -2291,9 +2291,17 @@ class basic_json
             {
                 // 15 digits of precision allows round-trip IEEE 754
                 // string->double->string
+#ifndef _MSC_VER
                 const auto sz = static_cast<unsigned int>(std::snprintf(nullptr, 0, "%.15g", m_value.number_float));
                 std::vector<typename string_t::value_type> buf(sz + 1);
                 std::snprintf(&buf[0], buf.size(), "%.15g", m_value.number_float);
+#else
+                // MSVC2013 doesn't have std::snprintf (a C99 function)
+                // no idea if _snprintf is a valid substitute for std::snprintf
+                const auto sz = static_cast<unsigned int>(_snprintf(nullptr, 0, "%.15g", m_value.number_float));
+                std::vector<typename string_t::value_type> buf(sz + 1);
+                _snprintf(&buf[0], buf.size(), "%.15g", m_value.number_float);
+#endif
                 return string_t(buf.data());
             }
 
